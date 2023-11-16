@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public GameObject arme;
     public bool canShoot = true;
     public Animator animator;
-    public bool  isShooting = false;
+    public static bool isShooting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,21 +19,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         //s'il a l'arme , onle desactive , s'il ne l'a pas , on l'active
-        if (canShoot && Input.GetKeyDown(KeyCode.Space))
+        if (canShoot && Input.GetKey(KeyCode.Space))
         {
             canShoot = false;
-            animator.SetTrigger("shoot_trig");
+            animator.SetBool("isShooting", true);
             arme.SetActive(true);
             Invoke(nameof(HideGun), 1f);
-            isShooting=true;
-     
+            isShooting = true;
+
         }
     }
 
     public void HideGun() {
         arme.SetActive(false);
+        animator.SetBool("isShooting", false);
         canShoot = true;
         isShooting = false;
     }
